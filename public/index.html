@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supermarket Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Animated Background Blobs -->
+  <div class="blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">S</div>
+        <h2>Supermarket</h2>
+      </div>
+      <nav id="nav">
+        <div class="nav-section">Tổng Quan</div>
+        <a href="#" id="navDashboard" class="active" data-page="dashboard">
+          <span class="nav-icon"><i class="fas fa-chart-pie"></i></span> Bảng Điều Khiển
+        </a>
+        <div class="nav-section">Quản Lý</div>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <!-- Dashboard View -->
+      <div id="dashboardView">
+        <div class="page-header">
+          <h1>Bảng Điều Khiển</h1>
+          <span class="header-sub" id="dashboardDate"></span>
+        </div>
+
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-card">
+            <div class="stat-orb violet"><i class="fas fa-dollar-sign"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="statRevenue">--</span>
+              <span class="stat-label">Tổng Doanh Thu</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-orb green"><i class="fas fa-box-open"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="statProducts">--</span>
+              <span class="stat-label">Sản Phẩm</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-orb pink"><i class="fas fa-users"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="statCustomers">--</span>
+              <span class="stat-label">Khách Hàng</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-orb sky"><i class="fas fa-file-invoice"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="statInvoices">--</span>
+              <span class="stat-label">Hóa Đơn</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-orb amber"><i class="fas fa-truck"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="statSuppliers">--</span>
+              <span class="stat-label">Nhà Cung Cấp</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-orb red"><i class="fas fa-user-tie"></i></div>
+            <div class="stat-info">
+              <span class="stat-value" id="statEmployees">--</span>
+              <span class="stat-label">Nhân Viên</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-card chart-wide">
+            <h3>Doanh Thu Theo Tháng</h3>
+            <canvas id="revenueChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Top Sản Phẩm Bán Chạy</h3>
+            <canvas id="topProductsChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Doanh Thu Theo Nhóm Hàng</h3>
+            <canvas id="categoryChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Phương Thức Thanh Toán</h3>
+            <canvas id="paymentChart"></canvas>
+          </div>
+          <div class="chart-card">
+            <h3>Cảnh Báo Tồn Kho Thấp</h3>
+            <div class="low-stock-list" id="lowStockList"></div>
+          </div>
+        </div>
+
+        <div class="recent-section">
+          <h3>Hóa Đơn Gần Đây</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Mã HD</th>
+                  <th>Ngày Lập</th>
+                  <th>Khách Hàng</th>
+                  <th>Nhân Viên</th>
+                  <th>PT Thanh Toán</th>
+                  <th>Tổng Tiền</th>
+                </tr>
+              </thead>
+              <tbody id="recentInvoices"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table View -->
+      <div id="tableView" style="display:none">
+        <div class="page-header">
+          <h1 id="pageTitle">Chọn bảng dữ liệu</h1>
+          <button id="btnAdd" class="btn btn-primary" style="display:none">+ Thêm mới</button>
+        </div>
+        <div class="table-wrap">
+          <table id="dataTable">
+            <thead id="tableHead"></thead>
+            <tbody id="tableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle"></h3>
+        <button id="modalClose" class="btn-close">&times;</button>
+      </div>
+      <form id="modalForm"></form>
+      <div class="modal-footer">
+        <button id="btnSave" class="btn btn-primary">Lưu</button>
+        <button id="btnCancel" class="btn">Hủy</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+</html>
