@@ -18,10 +18,13 @@
   </div>
 
   <div class="layout">
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
       <div class="sidebar-brand">
         <div class="brand-icon">S</div>
         <h2>Supermarket</h2>
+        <button class="sidebar-toggle" id="sidebarToggle">
+          <i class="fas fa-angles-left"></i>
+        </button>
       </div>
       <nav id="nav">
         <div class="nav-section">Tổng Quan</div>
@@ -32,6 +35,9 @@
       </nav>
     </aside>
 
+    <button class="sidebar-open-btn" id="sidebarOpenBtn">
+      <i class="fas fa-bars"></i>
+    </button>
     <main class="main">
       <!-- Dashboard View -->
       <div id="dashboardView">

@@ -174,6 +174,29 @@ Chart.defaults.elements.bar.borderSkipped = false;
 Chart.defaults.responsive = true;
 Chart.defaults.maintainAspectRatio = true;
 
+// ── Sidebar Toggle ──
+const layout = document.querySelector('.layout');
+const sidebarToggle = document.getElementById('sidebarToggle');
+const sidebarOpenBtn = document.getElementById('sidebarOpenBtn');
+
+sidebarToggle.addEventListener('click', () => {
+  const isMobile = window.innerWidth <= 768;
+  if (isMobile) {
+    layout.classList.remove('sidebar-open');
+  } else {
+    layout.classList.add('sidebar-collapsed');
+  }
+});
+
+sidebarOpenBtn.addEventListener('click', () => {
+  const isMobile = window.innerWidth <= 768;
+  if (isMobile) {
+    layout.classList.add('sidebar-open');
+  } else {
+    layout.classList.remove('sidebar-collapsed');
+  }
+});
+
 // ── Navigation ──
 const nav = document.getElementById('nav');
 
